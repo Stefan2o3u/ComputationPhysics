@@ -17,3 +17,5 @@ def potter(A):
     P = P_function(0.2,phi)
     plt.plot(P,phi)
     plt.show()
+
+print("hi")
