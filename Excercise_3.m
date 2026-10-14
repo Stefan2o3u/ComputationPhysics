@@ -5,7 +5,7 @@ zeta=1;           % friction (unit)
 kT=1;           % thermal energy (unit)
 K=3;           % dimensionless spring constant
 dt=0.001;     
-M=50000;       % number of steps
+M=500000;       % number of steps
 randomForce=true %set true for assignment 3
 meanBond=zeros(M,1);
 
@@ -75,14 +75,14 @@ nframes=50;
 frames=floor(M/nframes);
 rSaves= zeros(nframes, N, 3);    
 tSaves=zeros(nframes, 1);
-traj_end=zeros(M,1);                         
+bondTimeStep=zeros(M,Nb);                         
 
 iframe = 0;
 %Intitial condition
 %r= cumsum(randn(N,3), 1); %random starting position
 %r = [(0:N-1)', zeros(N,3-1)];
 r = zeros(N, 3);
-r(:,1)= 3*kT/K;
+r(:,1)= 3*kT/K
 rcm0=mean(r,1);
 for step = 1:M
     b=r(2:N,:)-r(1:N-1,:);
@@ -105,7 +105,8 @@ for step = 1:M
     if randomForce
         r=r+sqrt(2*kT*dt/zeta)*randn(N,3);
     end
-    traj_end(step) = sum((r(N,:) - r(1,:)).^2);
+    
+    bondTimeStep(step,:)=(sum(b.^2, 2));
     meanBond(step)=mean(sum(b.^2, 2));
 
     % save a frame
@@ -117,7 +118,9 @@ for step = 1:M
 end
 t = (1:M)*dt;
 figure; plot(t, meanBond); xlabel('t'); ylabel('<l^2>_{bonds}')
+figure; plot(t, bondTimeStep(:,1)); xlabel('t'); ylabel('l_1^2{bonds}')
 timeAveraged=3*sqrt(pi)/8*(2/K)^(5/2)*4*pi*(K/(2*kT*pi))^(3/2)
+
 
 L = 0.2*Nb;                                  
 for k= 1:iframe
@@ -130,6 +133,14 @@ for k= 1:iframe
     title(sprintf('t = %.2f', tSaves(k)));
     drawnow limitrate;
 end
+
+
+
+
+
+
+
+
 
 
 
