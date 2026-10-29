@@ -74,7 +74,7 @@ def plot_different_H(H):
     ax.plot(H,avg,label="Monte_Carlo")
     ax.plot(H,analytical,label="Analytical")
     ax.set(xlabel="muH/kBT", ylabel="<M>")
-    # title=f"Convergence of {namep}-MovingMesh")
+    
     ax.tick_params(axis="both", which="both", direction="in")
     ax.legend(loc="upper right")
     ax.grid()
@@ -89,7 +89,7 @@ def Equibritaion_time(J,N,H,Generator,nSim):
     ax.semilogx(np.linspace(1,nSim,nSim), Mag, label="Monte_Carlo")
 
     ax.set(xlabel="MC Sweeps", ylabel="<M>")
-    # title=f"Convergence of {namep}-MovingMesh")
+    
     ax.tick_params(axis="both", which="both", direction="in")
     ax.legend(loc="upper right")
     ax.grid()
@@ -116,7 +116,7 @@ def Part_E():
     ax.plot(J, avg, label="Monte_Carlo")
     ax.plot(J, analytical, label="Analytical")
     ax.set(xlabel="muH/kBT", ylabel="<M>")
-    # title=f"Convergence of {namep}-MovingMesh")
+    
     ax.tick_params(axis="both", which="both", direction="in")
     ax.legend(loc="upper right")
     ax.grid()
@@ -142,7 +142,7 @@ def Part_F():
     ax.loglog(N, xi[:,1], label="Monte_Carlo")
 
     ax.set(xlabel="Size", ylabel="xi")
-    # title=f"Convergence of {namep}-MovingMesh")
+    
     ax.tick_params(axis="both", which="both", direction="in")
     ax.legend(loc="upper right")
     ax.grid()
