@@ -152,3 +152,31 @@ def Part_F():
 
     return None
 #Part_F()
+def particle_mapping(n,epsilon,chemPot,z,kbT):
+    Jbar=-epsilon/(4*kbT)
+    muHbar=chemPot/2-epsilon*z/(4*kbT)
+    return Jbar,muHbar
+def Part_H(N,epsilon):
+    #kbT is taken as unity
+    kbT=1
+    chemPot =np.linspace(-15,15,50)/kbT
+    #4 neighbours so z=4,
+    J,H = particle_mapping(N,epsilon,chemPot,4,kbT)
+    surfaceCov=np.zeros(len(H))
+    for i in range(len(H)):
+        lattice, Mag =Monte_Carlo_sim(N,20000,J,H[i],Random_Grid_Generator_TwoD)
+        meanS = np.mean(Mag[5000:]) / (N ** 2)
+        #map S->n which gives surface coverage
+        surfaceCov[i]=0.5*(1+meanS)
+    fig, ax = plt.subplots(figsize=(16, 8))
+    ax.plot(chemPot, surfaceCov, "o-")
+
+
+    ax.set(xlabel="$(\mu-u)/k_BT$", ylabel=r"$\theta$")
+
+    ax.tick_params(axis="both", which="both", direction="in")
+    ax.legend(loc="upper right")
+    ax.grid()
+    plt.tight_layout()
+    plt.show()
+Part_H(32,4)
